@@ -1,4 +1,4 @@
-package com.ele.demo.shoalter;
+package com.ele.demo.async;
 
 import com.ele.demo.shoalter.dto.ResponseDto;
 import com.ele.demo.shoalter.dto.UpsertChatroomRequestDto;
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @Slf4j
-public class ChatroomController {
+public class AsyncController {
 
-    private final UpsertChatroomService upsertChatroomService;
+    private final AsyncUpsertChatroomService asyncUpsertChatroomService;
 
-    @PatchMapping("/sync")
+    @PatchMapping("/async")
     ResponseDto upsert(@RequestBody UpsertChatroomRequestDto upsertChatroomRequestDto) {
-        upsertChatroomService.upsert(upsertChatroomRequestDto);
-        return ResponseDto.success("upsert chatroom list to ScyllaDB");
+        asyncUpsertChatroomService.upsert(upsertChatroomRequestDto);
+        return ResponseDto.success("async upsert chatroom list to ScyllaDB");
     }
 }

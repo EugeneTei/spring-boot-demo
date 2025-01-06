@@ -1,21 +1,23 @@
-package com.ele.demo.shoalter;
+package com.ele.demo.async;
 
 import com.ele.demo.shoalter.dto.UpsertChatroomRequestDto;
 import com.ele.demo.shoalter.pojo.Chatroom;
 import com.ele.demo.shoalter.pojo.ChatroomCompositeKey;
+import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class UpsertChatroomService {
+public class AsyncUpsertChatroomService {
 
-    private final ChatroomRepository chatroomRepository;
+    private final AsyncSaveAllService asyncSaveAllService;
 
     public void upsert(UpsertChatroomRequestDto upsertChatroomRequestDto) {
 
@@ -26,16 +28,25 @@ public class UpsertChatroomService {
             chatroomList.add(chatroom);
         }
 
-        log.info("chatroomList List Size = {}", upsertChatroomRequestDto.getUserIdList().size());
+        List<List<Chatroom>> partitionList = Lists.partition(chatroomList, 100);
 
-        long start = System.currentTimeMillis();
+        List<CompletableFuture<Long>> futures = new ArrayList<>();
 
-        chatroomRepository.saveAll(chatroomList);
+        for (List<Chatroom> subChatroomList : partitionList) {
+            futures.add(asyncSaveAllService.saveAll(subChatroomList));
+        }
 
-        long executionTime = System.currentTimeMillis() - start;
-        double seconds = executionTime / 1000.0;
+       CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                .thenApply(v -> {
+                    long totalDuration = futures.stream()
+                            .mapToLong(CompletableFuture::join)
+                            .sum();
 
-        log.info("saveAll completed. Inserted {} chatrooms in {} seconds.", chatroomList.size(), seconds);
+                    long avgDuration = totalDuration / 100;
+                    log.info("Thread {} saveAll completed. Inserted {} chatrooms in {} ms.", Thread.currentThread().getName(), chatroomList.size(), avgDuration);
+
+                    return avgDuration;
+                });
     }
 
     private Chatroom generateChatroom(UpsertChatroomRequestDto requestDto, Long userId) {

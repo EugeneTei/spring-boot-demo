@@ -21,13 +21,6 @@ public class Chatroom {
     @PrimaryKey
     private ChatroomCompositeKey primaryKey;
 
-    @Column("item_id")
-    private Long chatroomId; //TODO:rename to itemId
-
-    @Column("message_source")
-    @CassandraType(type = CassandraType.Name.TEXT)
-    private MessageSource messageSource;
-
     @Column("last_modified_date_time")
     private LocalDateTime lastModifiedDateTime;
 }

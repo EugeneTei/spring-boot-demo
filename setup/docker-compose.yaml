@@ -8,7 +8,11 @@ services:
       - "9042:9042"
     volumes:
       - scylla-data:/var/lib/scylla
-    command: --developer-mode=1
+    command:
+      - "--developer-mode"
+      - "1"
+      - "--smp"
+      - "1"
     healthcheck:
       test: [ "CMD", "cqlsh", "-e", "describe keyspaces" ]
       interval: 10s

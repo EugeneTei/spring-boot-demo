@@ -20,7 +20,10 @@ public class ChatroomCompositeKey {
     @CassandraType(type = CassandraType.Name.TEXT)
     private UserSource userSource;
 
-    @PrimaryKeyColumn(name = "user_id", ordinal = 1, type = PrimaryKeyType.PARTITIONED)
+    @PrimaryKeyColumn(name = "user_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     private Long userId;
+
+    @PrimaryKeyColumn(name = "item_id", ordinal = 0, type = PrimaryKeyType.CLUSTERED)
+    private Long itemId;
 }
 
