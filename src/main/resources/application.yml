@@ -6,8 +6,43 @@ spring:
     port: 9042
     local-datacenter: datacenter1
     keyspace-name: example
-    schema-action: CREATE_IF_NOT_EXISTS
+    schema-action: CREATE_IF_NOT_EXISTS # automatically create the annotated table, not recommended for production systems
+#    request:
+#      timeout: 10s
 
 datastax-java-driver:
   basic:
     contact-points: 127.0.0.1:9042
+
+
+# org.springframework.data.cassandra.core.cql
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        data:
+#          cassandra:
+#            core:
+#              cql: INFO;
+
+#  org:
+#    slf4j:
+#      simpleLogger:
+#        log:
+#          com:
+#            datastax:
+#              oss:
+#                driver:
+#                  api:
+#                    core: DEBUG
+  # org.slf4j.simpleLogger.log.com.datastax.oss.driver.internal.core.session = DEBUG
+
+#logging:
+#  level:
+#    com.datastax.oss.driver.internal.core.time.Clock: OFF
+#    com.datastax.oss.driver.internal.core.cql.CqlPrepareAsyncProcessor: OFF
+#    com.datastax.oss.driver.internal.core.metadata.DefaultTopologyMonitor: OFF
+
+
+
+

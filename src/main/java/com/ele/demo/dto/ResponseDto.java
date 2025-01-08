@@ -1,4 +1,4 @@
-package com.ele.demo.shoalter.dto;
+package com.ele.demo.dto;
 
 import lombok.Builder;
 import lombok.Value;

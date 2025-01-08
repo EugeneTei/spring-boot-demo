@@ -1,4 +1,4 @@
-package com.ele.demo.shoalter.pojo;
+package com.ele.demo.springDataCassandra.pojo;
 
 public enum UserSource {
 

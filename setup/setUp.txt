@@ -10,10 +10,19 @@ CREATE KEYSPACE IF NOT EXISTS example WITH REPLICATION = {'class': 'SimpleStrate
 # create
 USE example;
 CREATE TABLE IF NOT EXISTS chatroom (
-            item_id BIGINT,
+            item_id int,
             user_source TEXT,
-            user_id BIGINT,
-            last_modified_date_time TIMESTAMP,
+            user_id int,
+            time TIMESTAMP,
             PRIMARY KEY ((user_source, user_id), item_id)
     );
 SELECT * FROM chatroom;
+
+# compare
+CREATE TABLE IF NOT EXISTS compare (
+            item_id int,
+            user_source TEXT,
+            user_id int,
+            time TIMESTAMP,
+            PRIMARY KEY ((user_source, user_id), item_id)
+    );

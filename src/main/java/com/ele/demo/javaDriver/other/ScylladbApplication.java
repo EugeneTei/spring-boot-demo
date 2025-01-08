@@ -1,4 +1,4 @@
-package com.ele.demo;
+package com.ele.demo.javaDriver.other;
 
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.cql.ResultSet;

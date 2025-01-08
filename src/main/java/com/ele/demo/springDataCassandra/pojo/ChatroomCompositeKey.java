@@ -1,4 +1,4 @@
-package com.ele.demo.shoalter.pojo;
+package com.ele.demo.springDataCassandra.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,9 +21,8 @@ public class ChatroomCompositeKey {
     private UserSource userSource;
 
     @PrimaryKeyColumn(name = "user_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
-    private Long userId;
+    private Integer userId;
 
     @PrimaryKeyColumn(name = "item_id", ordinal = 0, type = PrimaryKeyType.CLUSTERED)
-    private Long itemId;
+    private Integer itemId;
 }
-

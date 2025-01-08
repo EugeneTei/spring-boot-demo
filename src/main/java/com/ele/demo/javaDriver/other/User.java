@@ -1,4 +1,4 @@
-package com.ele.demo;
+package com.ele.demo.javaDriver.other;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

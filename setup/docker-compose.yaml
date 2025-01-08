@@ -8,11 +8,12 @@ services:
       - "9042:9042"
     volumes:
       - scylla-data:/var/lib/scylla
-    command:
-      - "--developer-mode"
-      - "1"
-      - "--smp"
-      - "1"
+      - /mnt/d/personal-project/spring-boot-demo/setup/scylla.yaml:/etc/scylla/scylla.yaml
+
+    user: root
+    privileged: true
+    command: --developer-mode=1 --smp=8
+
     healthcheck:
       test: [ "CMD", "cqlsh", "-e", "describe keyspaces" ]
       interval: 10s
